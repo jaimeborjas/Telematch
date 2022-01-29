@@ -10,7 +10,7 @@ class UserService {
     // Generates fake data to send in request via faker (NEEDS TO BE CHANGE ONCE WE FIGURE OUT THE DATABASE)
     generate(limit) {
         for (let i = 0; i < limit; i++) {
-            this.user.push({
+            this.users.push({
                 id: faker.datatype.uuid(),
                 type: "student",
                 firstName: faker.name.firstName(),
