@@ -307,6 +307,53 @@ body {
 	background: #c3073f;
 }
 
+.entire-chat
+{
+
+}
+.contact-container
+{
+	overflow: auto;
+	border:3px solid black;
+	height:100vh;
+	max-width:20rem;
+	margin:5rem
+}
+.contact
+{
+	border:2px solid black;
+	height:12vh;
+	max-width:25rem;
+}
+.chat-window
+{
+	overflow: auto;
+	position:absolute;
+	top:10rem;
+	right:17rem;
+	border:3px solid black;
+	height:100vh;
+	width:35rem;
+}
+
+.message-in
+{
+	margin:.5rem;
+	margin-right: 2rem;
+	padding: .5rem;
+	border:1px solid blue;
+	background-color: lightblue;
+}
+.message-out
+{
+	margin:.5rem;
+	margin-left: 2rem;
+	padding: .5rem;
+	border:1px solid gray;
+	background-color: lightgray;
+	text-align: right;
+}
+
 @media screen and (max-width: 768px) {
 	.footer-container {
 		height: 9rem;
