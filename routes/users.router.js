@@ -11,4 +11,9 @@ router.get('/', (req, res) => {
     res.json(users)
 })
 
+router.post('/', (req, res) => {
+    const { data } = req.body;
+    const user = service.create();
+})
+
 module.exports = router;
