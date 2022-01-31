@@ -8,7 +8,7 @@ const service = new UserService()
 
 router.get('/', (req, res) => {
     const users = service.findAll();
-    res.json(users)
+    res.render('pages/profile.ejs', { users: users });
 })
 
 router.post('/', (req, res) => {

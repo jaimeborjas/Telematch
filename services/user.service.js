@@ -4,7 +4,7 @@ const boom = require('@hapi/boom');
 class UserService {
     constructor() {
         this.users = [];
-        this.generate(100);
+        this.generate(25);
     }
 
     // Generates fake data to send in request via faker (NEEDS TO BE CHANGE ONCE WE FIGURE OUT THE DATABASE)
