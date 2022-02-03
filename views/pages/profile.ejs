@@ -15,21 +15,6 @@
 				<!-- BEGIN HEADER -->
 				<%- include('../partials/header') %>
 				<!-- END HEADER -->
-                <h1 class="heading">Users to connect:</h1>
-                <div class="profiles-container">
-                    <% users.forEach( user => {%> 
-                        <div class=profile-container>
-                            <div class="profile-image-container">
-                                <img class="profile-image" src="<%=  user.image %>" alt="">
-                            </div>
-                            <h5 class="profile-name"><%=  user.firstName  + ' ' + user.lastName%></h4>
-                            <h6 class="profile-type"><%=  user.type %></h5>
-                            <h6 class="profile-type">Location: Pittsburgh</h5>
-                            <button class="connect-button"> Connect</button>
-                        </div>
-                    <% }); %>
-                </div>
-
 
 				<!-- BEGIN FOOTER -->
 			</div>

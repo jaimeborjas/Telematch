@@ -1,47 +1,50 @@
 const faker = require('faker');
 const boom = require('@hapi/boom');
 
+const { models } = require('../libs/sequelize')
+
 class UserService {
-    constructor() {
-        this.users = [];
-        this.generate(25);
+    static _userServiceInstance = null
+    
+    //Singleton of the user service. do not call constructor instead call getInstance method
+    static getInstance() {
+        if (UserService._userServiceInstance === null) {
+            UserService._userServiceInstance = new UserService();
+        }
+        return UserService._userServiceInstance;
     }
 
-    // Generates fake data to send in request via faker (NEEDS TO BE CHANGE ONCE WE FIGURE OUT THE DATABASE)
-    generate(limit) {
-        for (let i = 0; i < limit; i++) {
-            this.users.push({
-                id: faker.datatype.uuid(),
-                type: "student",
-                firstName: faker.name.firstName(),
-                lastName: faker.name.lastName(),
-                image: faker.image.people(),
-            });
-            this.users.push({
-                id: faker.datatype.uuid(),
-                type: "preceptor",
-                firstName: faker.name.firstName(),
-                lastName: faker.name.lastName(),
-                image: faker.image.people()
-            });
-        }
-
+    constructor() {
+        this.users = [];
     }
     // Create a new user [TO DO => how to create a user depending on the type]
     async create(data) {
-        const { name, firstName, lastName, image } = data;
-        const newUser = {
-            id: faker.datatype.uuid(),
-            type: "student",
-            firstName: firstName,
-            lastName: lastName,
-            image: image
-        }
+        const newUser = await models.User.create(data);
+        return newUser;
     }
-
+    // Takes an id and updates the object with the changes
+    async update(id, changes) {
+        const user = await this.findOne(id)
+        const res = await user.update(changes);
+        return res
+    }
+    // Deletes the object with the given id
+    async delete(id) { 
+        const user = await this.findOne(id)
+        await user.destroy();
+        return id;
+    }
+    async findOne(id) {
+        const user = await models.User.findByPk(id);
+        if(!user){ 
+            throw boom.notFound('User not found')
+        }
+        return user
+    }
     // Returns all users in the fake database once we figure it out the database we will do lookups in this function
-    findAll() {
-        return this.users;
+    async findAll() {
+        const res = await models.User.findAll();
+        return res;
     }
 
     // Returns an array of all the users who are students
