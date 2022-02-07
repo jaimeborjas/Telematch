@@ -2,52 +2,52 @@ const express = require('express');
 const validatorHandler = require('../middlewares/validator.handler');
 
 
-const UserService = require('./../services/user.service');
-const { createUserSchema, getUserSchema, updateUserSchema } = require('./../schemas/users.schema');
+const CustomerService = require('../services/customer.service');
+const  { createCustomerSchema, getCustomerSchema, updateCustomerSchema } = require('../schemas/customers.schema');
 
 const router = express.Router();
-const service = UserService.getInstance();
+const service = CustomerService.getInstance();
 
 router.get('/', async (req, res, next) => {
     try {
-        const users = await service.findAll();
-        res.json(users)
+        const customer = await service.findAll();
+        res.json(customer)
     } catch (error) {
         next(error)
     }
 })
 
-router.get('/:id', validatorHandler(getUserSchema, 'params'),
+router.get('/:id', validatorHandler(getCustomerSchema, 'params'),
     async (req, res, next) => {
         try {
             const { id }  = req.params;
-            const newUser = await service.findOne(id)
-            res.json(newUser)
+            const newCustomer = await service.findOne(id)
+            res.json(newCustomer)
         } catch (error) {
             next(error)
         }
 });
 
-router.post('/', validatorHandler(createUserSchema, 'body'),
+router.post('/', validatorHandler(createCustomerSchema, 'body'),
     async (req, res, next) => {
         try {
             const body = req.body;
-            const newUser = await service.create(body)
-            res.json(newUser)
+            const newCustomer = await service.create(body)
+            res.json(newCustomer)
         } catch (error) {
             next(error)
         }
 });
 
 router.patch('/:id',
-    validatorHandler(getUserSchema, 'params'),
-    validatorHandler(updateUserSchema, 'body'),
+    validatorHandler(getCustomerSchema, 'params'),
+    validatorHandler(updateCustomerSchema, 'body'),
     async (req, res, next) => {
         try {
             const { id } = req.params;
             const body = req.body;
-            const user = await service.update(id, body);
-            res.json(user);
+            const customer = await service.update(id, body);
+            res.json(customer);
         } catch (error) {
             next(error);
         }
@@ -55,7 +55,7 @@ router.patch('/:id',
 );
 
 router.delete('/:id',
-    validatorHandler(getUserSchema, 'params'),
+    validatorHandler(getCustomerSchema, 'params'),
     async (req, res, next) => {
         try {
             const { id } = req.params;

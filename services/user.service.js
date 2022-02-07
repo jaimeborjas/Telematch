@@ -1,4 +1,3 @@
-const faker = require('faker');
 const boom = require('@hapi/boom');
 
 const { models } = require('../libs/sequelize')
@@ -35,7 +34,9 @@ class UserService {
         return id;
     }
     async findOne(id) {
-        const user = await models.User.findByPk(id);
+        const user = await models.User.findByPk(id,{
+            include: ['customer']
+        });
         if(!user){ 
             throw boom.notFound('User not found')
         }
@@ -43,7 +44,9 @@ class UserService {
     }
     // Returns all users in the fake database once we figure it out the database we will do lookups in this function
     async findAll() {
-        const res = await models.User.findAll();
+        const res = await models.User.findAll({
+            include: ['customer']
+        });
         return res;
     }
 
