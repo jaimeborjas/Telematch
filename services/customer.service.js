@@ -19,6 +19,7 @@ class CustomerService {
     // Create a new Customer
     async create(data) {
         const newCustomer = await models.Customer.create(data);
+        delete newCustomer.dataValues.user.password
         return newCustomer;
     }
     // Takes an id and updates the object with the changes

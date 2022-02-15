@@ -1,5 +1,6 @@
 const express = require('express');
 const validatorHandler = require('../middlewares/validator.handler');
+const passport = require('passport');
 
 
 const CustomerService = require('../services/customer.service');
@@ -28,12 +29,13 @@ router.get('/:id', validatorHandler(getCustomerSchema, 'params'),
         }
 });
 
-router.post('/', validatorHandler(createCustomerSchema, 'body'),
+router.post('/',
+    validatorHandler(createCustomerSchema, 'body'),
     async (req, res, next) => {
         try {
             const body = req.body;
             const newCustomer = await service.create(body)
-            res.json(newCustomer)
+            res.status(201).json(newCustomer)
         } catch (error) {
             next(error)
         }

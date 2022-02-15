@@ -1,4 +1,5 @@
 const { Model, DataTypes, Sequelize } = require('sequelize');
+const bcrypt = require('bcrypt');
 
 const USER_TABLE = 'users';
 // User Schema in the Database with all of its constrains
@@ -43,7 +44,8 @@ class User extends Model {
         // models
         this.hasOne(models.Customer,{
             as: 'customer',
-            foreignKey: 'userId'
+            foreignKey: 'userId',
+            onUpdate: 'CASCADE'
         })
     }
 
@@ -52,7 +54,13 @@ class User extends Model {
             sequelize,
             tableName: USER_TABLE,
             modelName: 'User',
-            timestamps: false
+            timestamps: false,
+            hooks: {
+                beforeCreate: async (user, options) => {
+                    const password = await bcrypt.hash(user.password, 10);
+                    user.password = password;
+                },
+            }
         }
     } 
 }

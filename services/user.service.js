@@ -18,15 +18,27 @@ class UserService {
     }
     // Create a new user [TO DO => how to create a user depending on the type]
     async create(data) {
-        const newUser = await models.User.create(data);
+        const newUser = await models.User.create(data, {
+            include: ['customer']
+        });
+        delete newUser.dataValues.password
         return newUser;
     }
     // Takes an id and updates the object with the changes
     async update(id, changes) {
         const user = await this.findOne(id)
-        const res = await user.update(changes);
+        const res = await user.update(changes, {
+            include: ['customer']
+        });
         return res
     }
+    async findByEmail(email) {
+        const rta = await models.User.findOne({
+            where: { email }
+        });
+        return rta;
+    }
+
     // Deletes the object with the given id
     async delete(id) { 
         const user = await this.findOne(id)
@@ -44,9 +56,7 @@ class UserService {
     }
     // Returns all users in the fake database once we figure it out the database we will do lookups in this function
     async findAll() {
-        const res = await models.User.findAll({
-            include: ['customer']
-        });
+        const res = await models.User.findAll();
         return res;
     }
 

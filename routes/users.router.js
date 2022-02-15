@@ -1,5 +1,7 @@
 const express = require('express');
 const validatorHandler = require('../middlewares/validator.handler');
+const {checkApiKey} = require('../middlewares/auth.handler');
+const passport = require('passport');
 
 
 const UserService = require('./../services/user.service');
@@ -8,7 +10,11 @@ const { createUserSchema, getUserSchema, updateUserSchema } = require('./../sche
 const router = express.Router();
 const service = UserService.getInstance();
 
-router.get('/', async (req, res, next) => {
+router.use(checkApiKey)
+
+router.get('/', 
+    passport.authenticate('jwt', {session: false}),
+    async (req, res, next) => {
     try {
         const users = await service.findAll();
         res.json(users)
