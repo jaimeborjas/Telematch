@@ -3,11 +3,11 @@ const validatorHandler = require('../middlewares/validator.handler');
 const passport = require('passport');
 
 
-const CustomerService = require('../services/customer.service');
-const  { createCustomerSchema, getCustomerSchema, updateCustomerSchema } = require('../schemas/customers.schema');
+const userInfoService = require('../services/userInfo.service');
+const  { createUserInfoSchema, getUserInfoSchema, updateUserInfoSchema } = require('../schemas/userInfo.schema');
 
 const router = express.Router();
-const service = CustomerService.getInstance();
+const service = userInfoService.getInstance();
 
 router.get('/', async (req, res, next) => {
     try {
@@ -18,7 +18,7 @@ router.get('/', async (req, res, next) => {
     }
 })
 
-router.get('/:id', validatorHandler(getCustomerSchema, 'params'),
+router.get('/:id', validatorHandler(getUserInfoSchema, 'params'),
     async (req, res, next) => {
         try {
             const { id }  = req.params;
@@ -30,7 +30,7 @@ router.get('/:id', validatorHandler(getCustomerSchema, 'params'),
 });
 
 router.post('/',
-    validatorHandler(createCustomerSchema, 'body'),
+    validatorHandler(createUserInfoSchema, 'body'),
     async (req, res, next) => {
         try {
             const body = req.body;
@@ -42,8 +42,8 @@ router.post('/',
 });
 
 router.patch('/:id',
-    validatorHandler(getCustomerSchema, 'params'),
-    validatorHandler(updateCustomerSchema, 'body'),
+    validatorHandler(getUserInfoSchema, 'params'),
+    validatorHandler(updateUserInfoSchema, 'body'),
     async (req, res, next) => {
         try {
             const { id } = req.params;
@@ -57,7 +57,7 @@ router.patch('/:id',
 );
 
 router.delete('/:id',
-    validatorHandler(getCustomerSchema, 'params'),
+    validatorHandler(updateUserInfoSchema, 'params'),
     async (req, res, next) => {
         try {
             const { id } = req.params;

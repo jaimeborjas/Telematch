@@ -8,7 +8,7 @@ const firstName = Joi.string();
 const lastName = Joi.string();
 const location = Joi.string();
 
-const createCustomerSchema = Joi.object({
+const createUserInfoSchema = Joi.object({
     firstName: firstName.required(),
     lastName: lastName.required(),
     location: location.required(),
@@ -16,15 +16,15 @@ const createCustomerSchema = Joi.object({
     userId: userId.required()
 })
 
-const getCustomerSchema = Joi.object({
+const getUserInfoSchema = Joi.object({
     id: id.required()
 })
 
-const updateCustomerSchema = Joi.object({
+const updateUserInfoSchema = Joi.object({
     firstName: firstName,
     lastName: lastName,
     location: location,
     userId: userId
 });
 
-module.exports = { createCustomerSchema, getCustomerSchema, updateCustomerSchema }
+module.exports = { createUserInfoSchema, getUserInfoSchema, updateUserInfoSchema }

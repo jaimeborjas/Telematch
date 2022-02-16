@@ -2,15 +2,15 @@ const boom = require('@hapi/boom');
 
 const { models } = require('../libs/sequelize')
 
-class CustomerService {
-    static _customerServiceInstance = null
+class UserInfoService {
+    static _userInfoServiceInstance = null
     
     //Singleton of the customer service. do not call constructor instead call getInstance method
     static getInstance() {
-        if (CustomerService._customerServiceInstance === null) {
-            CustomerService._customerServiceInstance = new CustomerService();
+        if (UserInfoService._userInfoServiceInstance === null) {
+            UserInfoService._userInfoServiceInstance = new UserInfoService();
         }
-        return CustomerService._customerServiceInstance;
+        return UserInfoService._userInfoServiceInstance;
     }
 
     constructor() {
@@ -18,34 +18,34 @@ class CustomerService {
     }
     // Create a new Customer
     async create(data) {
-        const newCustomer = await models.Customer.create(data);
-        delete newCustomer.dataValues.user.password
-        return newCustomer;
+        const newUserInfo = await models.UserInfo.create(data);
+        delete newUserInfo.dataValues.user.password
+        return newUserInfo;
     }
     // Takes an id and updates the object with the changes
     async update(id, changes) {
-        const customer = await this.findOne(id)
+        const userInfo = await this.findOne(id)
         const res = await customer.update(changes);
         return res
     }
     // Deletes the object with the given id
     async delete(id) { 
-        const customer = await this.findOne(id)
-        await customer.destroy();
+        const userInfo = await this.findOne(id)
+        await userInfo.destroy();
         return id;
     }
     async findOne(id) {
-        const customer = await models.Customer.findByPk(id, {
+        const userInfo = await models.UserInfo.findByPk(id, {
             include: ['user']
         });
-        if(!customer){ 
+        if(!userInfo){ 
             throw boom.notFound('User not found')
         }
-        return customer
+        return userInfo
     }
     // Returns all customer in the database
     async findAll() {
-        const res = await models.Customer.findAll({
+        const res = await models.UserInfo.findAll({
             include: ['user']
         });
         return res;
@@ -53,4 +53,4 @@ class CustomerService {
 
 }
 
-module.exports = CustomerService;
+module.exports = UserInfoService;

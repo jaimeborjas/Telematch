@@ -19,7 +19,7 @@ class UserService {
     // Create a new user [TO DO => how to create a user depending on the type]
     async create(data) {
         const newUser = await models.User.create(data, {
-            include: ['customer']
+            include: ['userInfo']
         });
         delete newUser.dataValues.password
         return newUser;
@@ -28,7 +28,7 @@ class UserService {
     async update(id, changes) {
         const user = await this.findOne(id)
         const res = await user.update(changes, {
-            include: ['customer']
+            include: ['userInfo']
         });
         return res
     }
@@ -47,7 +47,7 @@ class UserService {
     }
     async findOne(id) {
         const user = await models.User.findByPk(id,{
-            include: ['customer']
+            include: ['userInfo']
         });
         if(!user){ 
             throw boom.notFound('User not found')

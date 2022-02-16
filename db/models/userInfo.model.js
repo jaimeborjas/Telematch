@@ -2,9 +2,9 @@ const { Model, DataTypes, Sequelize } = require('sequelize');
 
 const {USER_TABLE} = require('./user.model')
 
-const CUSTOMER_TABLE = 'customer';
+const USER_INFO_TABLE = 'user_info';
 // Customer Schema in the Database with all of its constrains
-const CustomerSchema = {
+const UserInfoSchema = {
     id: {
         allowNull: false,
         autoIncrement: true,
@@ -22,7 +22,7 @@ const CustomerSchema = {
         field: 'last_name'
     },
     location: {
-        allowNull: false,
+        allowNull: true,
         type: DataTypes.STRING
     },
     createdAt: {
@@ -51,7 +51,7 @@ const CustomerSchema = {
     }
 }
 // Customer class model 
-class Customer extends Model {
+class UserInfo extends Model {
     static associate(models) {
         // models
         this.belongsTo(models.User, {as: 'user'});
@@ -60,11 +60,11 @@ class Customer extends Model {
     static config(sequelize) {
         return {
             sequelize,
-            tableName: CUSTOMER_TABLE,
-            modelName: 'Customer',
+            tableName: USER_INFO_TABLE,
+            modelName: 'UserInfo',
             timestamps: false
         }
     } 
 }
 
-module.exports = { CUSTOMER_TABLE, CustomerSchema, Customer }
+module.exports = { USER_INFO_TABLE, UserInfoSchema, UserInfo }

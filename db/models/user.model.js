@@ -42,8 +42,8 @@ class User extends Model {
     // Describes relations with other tables
     static associate(models) {
         // models
-        this.hasOne(models.Customer,{
-            as: 'customer',
+        this.hasOne(models.UserInfo,{
+            as: 'userInfo',
             foreignKey: 'userId',
             onUpdate: 'CASCADE'
         })

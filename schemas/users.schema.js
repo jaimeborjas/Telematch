@@ -13,10 +13,10 @@ const createUserSchema = Joi.object({
     email: email.required(),
     password: password.required(),
     role: role,
-    customer: Joi.object({   
+    userInfo: Joi.object({   
         firstName: firstName.required(),
         lastName: lastName.required(),
-        location: location.required()
+        location: location
     })
 })
 
