@@ -46,7 +46,7 @@ class UserService {
         return id;
     }
     async findOne(id) {
-        const user = await models.User.findByPk(id,{
+        const user = await models.User.findByPk(id, {
             include: ['userInfo']
         });
         if(!user){ 
@@ -56,7 +56,9 @@ class UserService {
     }
     // Returns all users in the fake database once we figure it out the database we will do lookups in this function
     async findAll() {
-        const res = await models.User.findAll();
+        const res = await models.User.findAll({
+            include: ['userInfo']
+        });
         return res;
     }
 
