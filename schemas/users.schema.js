@@ -29,9 +29,9 @@ const updateUserSchema = Joi.object({
     password: password,
     role: role,
     customer: Joi.object({   
-        firstName: firstName.required(),
-        lastName: lastName.required(),
-        location: location.required()
+        firstName: firstName,
+        lastName: lastName,
+        location: location
     })
 });
 
