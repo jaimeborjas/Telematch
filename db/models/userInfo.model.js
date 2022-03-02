@@ -25,6 +25,19 @@ const UserInfoSchema = {
         allowNull: true,
         type: DataTypes.STRING
     },
+    bio: {
+        allowNull: true,
+        type: DataTypes.STRING,
+    },
+    availability: {
+        allowNull: true,
+        type: DataTypes.BOOLEAN,
+        defaultValue: 'false',
+    },
+    specialty: {
+        allowNull: true,
+        type: DataTypes.STRING,
+    },
     createdAt: {
         allowNull: false,
         type: DataTypes.DATE,

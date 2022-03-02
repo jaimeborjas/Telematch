@@ -8,6 +8,10 @@ const password = Joi.string().min(8);
 const firstName = Joi.string();
 const lastName = Joi.string();
 const location = Joi.string();
+const availability = Joi.boolean();
+const bio = Joi.string();
+const specialty = Joi.string();
+
 
 const createUserSchema = Joi.object({
     email: email.required(),
@@ -16,7 +20,10 @@ const createUserSchema = Joi.object({
     userInfo: Joi.object({   
         firstName: firstName.required(),
         lastName: lastName.required(),
-        location: location
+        location: location,
+        availability: availability,
+        bio: bio,
+        specialty: specialty
     })
 })
 
@@ -28,10 +35,13 @@ const updateUserSchema = Joi.object({
     email: email,
     password: password,
     role: role,
-    customer: Joi.object({   
+    userInfo: Joi.object({   
         firstName: firstName,
         lastName: lastName,
-        location: location
+        location: location,
+        availability: availability,
+        bio: bio,
+        specialty: specialty
     })
 });
 

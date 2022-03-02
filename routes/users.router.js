@@ -45,15 +45,15 @@ router.post('/', validatorHandler(createUserSchema, 'body'),
         }
 });
 
-router.patch('/:id',
-    validatorHandler(getUserSchema, 'params'),
+router.patch('/',
+    passport.authenticate('jwt', {session: false}),
     validatorHandler(updateUserSchema, 'body'),
     async (req, res, next) => {
         try {
-            const { id } = req.params;
-            const body = req.body;
-            const user = await service.update(id, body);
-            res.json(user);
+        const id = req.user.sub;
+        const body = req.body;
+        const user = await service.update(id, body);
+        res.json(user)
         } catch (error) {
             next(error);
         }

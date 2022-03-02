@@ -27,9 +27,16 @@ class UserService {
     // Takes an id and updates the object with the changes
     async update(id, changes) {
         const user = await this.findOne(id)
-        const res = await user.update(changes, {
-            include: ['userInfo']
-        });
+        const res = await user.update(changes);
+        if('userInfo' in changes) {
+            const userInfo = await models.UserInfo.findOne({
+                where: {
+                    userId: id
+                }
+            })
+            const newUserInfo = await userInfo.update(changes.userInfo)
+            res.dataValues.userInfo = newUserInfo.dataValues;
+        }
         return res
     }
     async findByEmail(email) {
