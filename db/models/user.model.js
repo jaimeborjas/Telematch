@@ -1,5 +1,6 @@
 const { Model, DataTypes, Sequelize } = require('sequelize');
 const bcrypt = require('bcrypt');
+const {Connection} = require('./connection.model')
 
 const USER_TABLE = 'users';
 // User Schema in the Database with all of its constrains
@@ -48,6 +49,16 @@ class User extends Model {
             onUpdate: 'CASCADE',
             onDelete: 'CASCADE'
         })
+        this.belongsToMany(models.User, { 
+            as: 'friend',
+            foreignKey: 'userId',
+            through: Connection
+        });
+        this.belongsToMany(models.User, { 
+            as: 'userFriends',
+            foreignKey: 'friendId',
+            through: Connection
+        });
     }
 
     static config(sequelize) {

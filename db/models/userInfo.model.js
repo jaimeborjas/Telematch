@@ -1,6 +1,6 @@
 const { Model, DataTypes, Sequelize } = require('sequelize');
 
-const {USER_TABLE} = require('./user.model')
+const { USER_TABLE } = require('./user.model')
 
 const USER_INFO_TABLE = 'user_info';
 // Customer Schema in the Database with all of its constrains

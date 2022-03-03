@@ -68,15 +68,9 @@ class UserService {
         });
         return res;
     }
+    async createConnection(data){
+        const connection = await models.Connection.create(data)
 
-    // Returns an array of all the users who are students
-    findStudents() {
-        return this.users.filter(item => item.type == "student");
-    }
-
-    // Returns an array of all the users who are preceptors
-    findPreceptors() {
-        return this.users.filter(item => item.type == "preceptor");
     }
 
 }
