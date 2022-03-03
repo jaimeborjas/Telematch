@@ -9,10 +9,15 @@ const  { createUserInfoSchema, getUserInfoSchema, updateUserInfoSchema } = requi
 const router = express.Router();
 const service = userInfoService.getInstance();
 
-router.get('/', async (req, res, next) => {
+const UserService = require('./../services/user.service');
+const userService = UserService.getInstance();
+
+router.get('/', 
+    passport.authenticate('jwt', {session: false}),
+    async (req, res, next) => {
     try {
-        const customer = await service.findAll();
-        res.json(customer)
+        const userInfo = await userService.findOne(req.user.sub);
+        res.json(userInfo)
     } catch (error) {
         next(error)
     }

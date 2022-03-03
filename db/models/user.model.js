@@ -45,7 +45,8 @@ class User extends Model {
         this.hasOne(models.UserInfo,{
             as: 'userInfo',
             foreignKey: 'userId',
-            onUpdate: 'CASCADE'
+            onUpdate: 'CASCADE',
+            onDelete: 'CASCADE'
         })
     }
 

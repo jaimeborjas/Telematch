@@ -38,7 +38,7 @@ router.post('/signup',
     async (req, res, next) => {
         try {
             const body = req.body;
-            const newUser = await service.create(body)
+            const newUser = await service.create(body);
             next();
         } catch (error) {
             next(error)
