@@ -60,7 +60,7 @@ class AuthService {
       from: config.smtpEmail,
       to: `${user.email}`,
       subject: 'Recover your password',
-      html: `<b>Ingresa a este link => ${link}</b>`,
+      html: `<b>Click this link to change your password => ${link}</b>`,
     };
     const rta = await this.sendMail(mail);
     return rta;
