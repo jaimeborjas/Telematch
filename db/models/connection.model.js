@@ -15,7 +15,6 @@ const ConnectionsSchema = {
     userId: {
         field: 'user_id',
         allowNull: false,
-        unique: true,
         type: DataTypes.INTEGER,
         references: {
             model: USER_TABLE,
@@ -27,7 +26,6 @@ const ConnectionsSchema = {
     connectionId: {
         field: 'connection_id',
         allowNull: false,
-        unique: true,
         type: DataTypes.INTEGER,
         references: {
             model: USER_TABLE,
@@ -35,12 +33,24 @@ const ConnectionsSchema = {
         },
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL'
+    },
+    createdAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
+        field: 'created_at',
+    },
+    updatedAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
+        field: 'created_at',
     }
 }
 // Customer class model it is used to initialize the mdoel in the sequalize instance
 class Connection extends Model {
     // Describes relations with other tables
-    static associate(models) {}
+    static associate(models) {
+        
+    }
 
     static config(sequelize) {
         return {

@@ -17,32 +17,40 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: DataTypes.INTEGER,
-      },
-      userId: {
-        field: "user_id",
+        type: DataTypes.INTEGER
+    },
+    userId: {
+        field: 'user_id',
         allowNull: false,
-        unique: true,
         type: DataTypes.INTEGER,
         references: {
-          model: USER_TABLE,
-          key: "id",
+            model: USER_TABLE,
+            key: 'id'
         },
-        onUpdate: "CASCADE",
-        onDelete: "SET NULL",
-      },
-      connectionId: {
-        field: "connection_id",
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL'
+    },
+    connectionId: {
+        field: 'connection_id',
         allowNull: false,
-        unique: true,
         type: DataTypes.INTEGER,
         references: {
-          model: USER_TABLE,
-          key: "id",
+            model: USER_TABLE,
+            key: 'id'
         },
-        onUpdate: "CASCADE",
-        onDelete: "SET NULL",
-      },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL'
+    },
+    createdAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
+        field: 'created_at',
+    },
+    updatedAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
+        field: 'created_at',
+    }
     });
   },
 

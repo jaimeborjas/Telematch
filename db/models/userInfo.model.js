@@ -52,7 +52,7 @@ const UserInfoSchema = {
     },
     userId: {
         field: 'user_id',
-        allowNull: false,
+        allowNull: true,
         unique: true,
         type: DataTypes.INTEGER,
         references: {
@@ -60,7 +60,7 @@ const UserInfoSchema = {
             key: 'id'
         },
         onUpdate: 'CASCADE',
-        onDelete: 'SET NULL'
+        onDelete: 'CASCADE'
     }
 }
 // Customer class model 
