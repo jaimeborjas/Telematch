@@ -22,6 +22,26 @@ router.get('/',
         next(error)
     }
 })
+router.post('/', validatorHandler(createUserSchema, 'body'),
+    async (req, res, next) => {
+        try {
+            const body = req.body;
+            const newUser = await service.create(body)
+            res.json(newUser)
+        } catch (error) {
+            next(error)
+        }
+});
+router.post('/connect', async (req, res, next) => {
+    try {
+        const body = req.body;
+        const connection = await service.createConnection(body);
+        res.json(connection)
+    } catch (error) {
+        next(error)
+    }
+})
+
 
 router.get('/:id', validatorHandler(getUserSchema, 'params'),
     async (req, res, next) => {
@@ -34,16 +54,6 @@ router.get('/:id', validatorHandler(getUserSchema, 'params'),
         }
 });
 
-router.post('/', validatorHandler(createUserSchema, 'body'),
-    async (req, res, next) => {
-        try {
-            const body = req.body;
-            const newUser = await service.create(body)
-            res.json(newUser)
-        } catch (error) {
-            next(error)
-        }
-});
 
 router.patch('/',
     passport.authenticate('jwt', {session: false}),

@@ -1,6 +1,6 @@
 const { Model, DataTypes, Sequelize } = require('sequelize');
 
-const {USER_TABLE} = require('./user.model')
+const { USER_TABLE } = require('./user.model')
 
 const USER_INFO_TABLE = 'user_info';
 // Customer Schema in the Database with all of its constrains
@@ -52,7 +52,7 @@ const UserInfoSchema = {
     },
     userId: {
         field: 'user_id',
-        allowNull: false,
+        allowNull: true,
         unique: true,
         type: DataTypes.INTEGER,
         references: {
@@ -60,7 +60,7 @@ const UserInfoSchema = {
             key: 'id'
         },
         onUpdate: 'CASCADE',
-        onDelete: 'SET NULL'
+        onDelete: 'CASCADE'
     }
 }
 // Customer class model 
