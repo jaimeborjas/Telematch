@@ -54,13 +54,13 @@ class AuthService {
     }
     const payload = { sub: user.id };
     const token = jwt.sign(payload, config.jwtSecret, { expiresIn: '15min' });
-    const link = `http://localhost:3000/change-password?token=${token}`;
+    const link = `http://fathomless-dusk-76417.herokuapp.com/change-password?token=${token}`;
     await service.update(user.id, { recoveryToken: token });
     const mail = {
       from: config.smtpEmail,
       to: `${user.email}`,
       subject: 'Recover your password',
-      html: `<b>Ingresa a este link => ${link}</b>`,
+      html: `<b>Click this link to change your password => ${link}</b>`,
     };
     const rta = await this.sendMail(mail);
     return rta;
