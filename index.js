@@ -6,7 +6,7 @@ const { errorHandler, logErrors, boomErrorHandler, sequelizeErrorHandler } = req
 const { application_name } = require('pg/lib/defaults');
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3002;
 
 //express middlewares
 app.use(express.urlencoded({extended:true}));
