@@ -51,7 +51,19 @@ class UserService {
   }
   async findOne(id) {
     const user = await models.User.findByPk(id, {
-      include: ['userInfo'],
+      include: [
+        {
+          model: models.UserInfo,
+          as: 'userInfo',
+        },
+        {
+          model: models.User,
+          as: 'connections',
+          attributes: {
+            exclude: ['password', 'Connection'],
+          },
+        },
+      ],
     });
     if (!user) {
       throw boom.notFound('User not found');
