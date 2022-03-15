@@ -59,6 +59,7 @@ class UserService {
         {
           model: models.User,
           as: 'connections',
+          include: ['userInfo'],
           attributes: {
             exclude: ['password', 'Connection'],
           },
