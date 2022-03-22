@@ -27,6 +27,7 @@ router.post(
   async (req, res, next) => {
     try {
       const body = req.body;
+      console.log(body);
       const newUser = await service.createUser(body);
       next();
     } catch (error) {
