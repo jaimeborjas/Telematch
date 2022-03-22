@@ -2,6 +2,10 @@ const Joi = require('joi');
 
 const id = Joi.number();
 const role = Joi.string().valid(...['student', 'preceptor']);
+<<<<<<< HEAD
+=======
+const username = Joi.string();
+>>>>>>> d1773b99f15b714d42cf5b7af21f004f7f48396d
 const email = Joi.string().email();
 const password = Joi.string().min(8);
 
@@ -17,6 +21,10 @@ const createUserSchema = Joi.object({
   password: password.required(),
   role: role,
   userInfo: Joi.object({
+<<<<<<< HEAD
+=======
+    username: username.required(),
+>>>>>>> d1773b99f15b714d42cf5b7af21f004f7f48396d
     firstName: firstName.required(),
     lastName: lastName.required(),
     location: location,
