@@ -34,6 +34,10 @@ const ConnectionsSchema = {
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL'
     },
+    accepted: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+    },
     createdAt: {
         allowNull: false,
         type: DataTypes.DATE,

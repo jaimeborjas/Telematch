@@ -97,7 +97,6 @@ class UserService {
   async createConnection(data) {
     const { userId, connectionId } = data;
     const connection = await models.Connection.create({ userId, connectionId });
-    const connection2 = await models.Connection.create({ userId: connectionId, connectionId: userId });
     return { connection, connection2 };
   }
 }
