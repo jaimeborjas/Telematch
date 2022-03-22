@@ -15,10 +15,13 @@ class UserService {
   }
   // Create a new user [TO DO => how to create a user depending on the type]
   async create(data) {
-    const newUser = await models.User.create(data, {
-      include: ['userInfo'],
-    });
-    delete newUser.dataValues.password;
+    try {
+      const newUser = await models.User.create(data, {
+        include: ['userInfo'],
+      });
+      delete newUser.dataValues.password;
+    } catch (error) {}
+
     return newUser;
   }
   // Takes an id and updates the object with the changes
