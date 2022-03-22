@@ -21,11 +21,6 @@ const UserInfoSchema = {
     type: DataTypes.STRING,
     field: 'last_name',
   },
-  username: {
-    allowNull: false,
-    type: DataTypes.STRING,
-    unique: true,
-  },
   location: {
     allowNull: true,
     type: DataTypes.STRING,

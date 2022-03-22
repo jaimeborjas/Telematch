@@ -1,10 +1,10 @@
 'use strict';
 
-const { USER_INFO_TABLE } = require('./../models/userInfo.model');
+const { USER_TABLE } = require('./../models/user.model');
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.addColumn(USER_INFO_TABLE, 'username', {
+    await queryInterface.addColumn(USER_TABLE, 'username', {
       allowNull: false,
       type: Sequelize.DataTypes.STRING,
       unique: true,
@@ -12,6 +12,6 @@ module.exports = {
   },
 
   down: async (queryInterface) => {
-    await queryInterface.removeColumn(USER_INFO_TABLE, 'username');
+    await queryInterface.removeColumn(USER_TABLE, 'username');
   },
 };

@@ -16,9 +16,9 @@ const specialty = Joi.string();
 const createUserSchema = Joi.object({
   email: email.required(),
   password: password.required(),
+  username: username.required(),
   role: role,
   userInfo: Joi.object({
-    username: username.required(),
     firstName: firstName.required(),
     lastName: lastName.required(),
     location: location,

@@ -30,6 +30,11 @@ const UserSchema = {
     allowNull: true,
     type: DataTypes.STRING,
   },
+  username: {
+    allowNull: false,
+    type: DataTypes.STRING,
+    unique: true,
+  },
   createdAt: {
     allowNull: false,
     type: DataTypes.DATE,
