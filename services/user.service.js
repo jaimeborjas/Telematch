@@ -133,6 +133,10 @@ class UserService {
       where: {
         role: toSearch,
       },
+      include: ['userInfo'],
+      attributes: {
+        exclude: ['password', 'recoveryToken'],
+      },
     });
     return users;
   }
