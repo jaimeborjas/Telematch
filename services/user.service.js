@@ -75,11 +75,6 @@ class UserService {
         },
       ],
     });
-    // const connections = await models.Connection.findAll({
-    //   where: {
-    //     [Op.or]: [{ userId: id }, { connectionId: id }],
-    //   },
-    // });
     if (!user) {
       throw boom.notFound('User not found');
     }
@@ -134,11 +129,35 @@ class UserService {
         role: toSearch,
       },
       include: ['userInfo'],
+      // {
+      //   model: models.User,
+      //   as: 'connections',
+      //   where: {
+      //     [Op.not]: [{ userId: id }, { connectionId: id }],
+      //   },
+      //   attributes: {
+      //     exclude: ['password', 'Connection'],
+      //   },
+      // },
       attributes: {
         exclude: ['password', 'recoveryToken'],
       },
     });
-    return users;
+    let availableUsers = [...users];
+    for (let user of users) {
+      for (let connection of idConnections) {
+        if (connection.getDataValue('userId') == id) {
+          availableUsers = availableUsers.filter((ele) => {
+            return ele.id !== connection.getDataValue('connectionId');
+          });
+        } else if (connection.getDataValue('connectionId') == id) {
+          availableUsers = availableUsers.filter((ele) => {
+            return ele.id !== connection.getDataValue('userId');
+          });
+        }
+      }
+    }
+    return availableUsers;
   }
 
   async createConnection(data) {
