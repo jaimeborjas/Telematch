@@ -28,6 +28,16 @@ router.post('/', validatorHandler(createUserSchema, 'body'), async (req, res, ne
     next(error);
   }
 });
+
+router.get('/available', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
+  try {
+    const connection = await service.getAvailableUsersToConnect(req.user.sub);
+    res.json(connection);
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.post('/connect', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
   try {
     const data = {
