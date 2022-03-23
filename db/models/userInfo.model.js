@@ -1,5 +1,6 @@
 const { Model, DataTypes, Sequelize } = require('sequelize');
 
+// new comment
 const { USER_TABLE } = require('./user.model');
 
 const USER_INFO_TABLE = 'user_info';
