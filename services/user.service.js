@@ -24,7 +24,7 @@ class UserService {
   }
   // Takes an id and updates the object with the changes
   async update(id, changes) {
-    const user = await this.findOne(id);
+    const user = await models.User.findByPk(id);
     const res = await user.update(changes);
     if ('userInfo' in changes) {
       const userInfo = await models.UserInfo.findOne({
