@@ -127,7 +127,7 @@ class UserService {
         [Op.or]: [{ userId: id }, { connectionId: id }],
       },
     });
-    const role = idUser.user.dataValues.role;
+    const role = idUser.user.role;
     const toSearch = role == 'student' ? 'preceptor' : 'student';
     const users = await models.User.findAll({
       where: {
