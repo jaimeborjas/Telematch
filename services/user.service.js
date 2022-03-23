@@ -46,7 +46,7 @@ class UserService {
 
   // Deletes the object with the given id
   async delete(id) {
-    const user = await this.findOne(id);
+    const user = await models.User.findByPk(id);
     await user.destroy();
     return id;
   }
