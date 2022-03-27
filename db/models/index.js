@@ -1,6 +1,8 @@
 const { User, UserSchema } = require('./user.model');
 const { UserInfo, UserInfoSchema } = require('./userInfo.model');
 const { Connection, ConnectionsSchema } = require('./connection.model');
+const { Message, MessageSchema } = require('./message.model');
+const { Conversation, ConversationsSchema } = require('./conversation.model');
 
 /**
  *  Inits all of the DB Models into the sequelize instance
@@ -8,15 +10,19 @@ const { Connection, ConnectionsSchema } = require('./connection.model');
  */
 
 function setupModels(sequelize) {
-    // inits models and schema
-    User.init(UserSchema, User.config(sequelize)); // Inits 'users' table
-    UserInfo.init(UserInfoSchema, UserInfo.config(sequelize)); // Init 'customers' table
-    Connection.init(ConnectionsSchema, Connection.config(sequelize)); // Init 'connections' table
-    
-    // inits relations
-    User.associate(sequelize.models);
-    UserInfo.associate(sequelize.models);
-    Connection.associate(sequelize.models);
+  // inits models and schema
+  User.init(UserSchema, User.config(sequelize)); // Inits 'users' table
+  UserInfo.init(UserInfoSchema, UserInfo.config(sequelize)); // Init 'customers' table
+  Connection.init(ConnectionsSchema, Connection.config(sequelize)); // Init 'connections' table
+  Message.init(MessageSchema, Message.config(sequelize)); // Init ''Connection.config(sequelize))
+  Conversation.init(ConversationsSchema, Conversation.config(sequelize)); // Init ''Connection.config(sequelize))
+
+  // inits relations
+  User.associate(sequelize.models);
+  UserInfo.associate(sequelize.models);
+  Connection.associate(sequelize.models);
+  Message.associate(sequelize.models);
+  Conversation.associate(sequelize.models);
 }
 
 module.exports = setupModels;
