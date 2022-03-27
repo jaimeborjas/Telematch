@@ -174,6 +174,13 @@ class UserService {
     }
     return isCreated;
   }
+
+  async acceptConnection(id, data) {
+    const connection = await models.Connection.findByPk(id);
+    console.log(connection);
+    const update = connection.update({ accepted: data.accepted });
+    return update;
+  }
 }
 
 module.exports = UserService;
