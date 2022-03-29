@@ -16,7 +16,7 @@ const MessageSchema = {
     allowNull: false,
     type: DataTypes.STRING,
   },
-  sender: {
+  senderId: {
     field: 'sender',
     allowNull: false,
     type: DataTypes.INTEGER,
@@ -27,7 +27,7 @@ const MessageSchema = {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
   },
-  receiver: {
+  receiverId: {
     field: 'receiver',
     allowNull: false,
     type: DataTypes.INTEGER,
@@ -67,14 +67,15 @@ class Message extends Model {
     this.belongsTo(models.Conversation, {
       foreignKey: 'id',
     });
-    this.hasMany(models.User, {
-      foreignKey: 'id',
-      as: 'Sender',
+    this.belongsTo(models.User, {
+      foreignKey: 'receiverId',
+      as: 'receiver',
     });
-    this.hasMany(models.User, {
-      foreignKey: 'id',
-      as: 'Receiver',
+    this.belongsTo(models.User, {
+      foreignKey: 'senderId',
+      as: 'sender',
     });
+    // this.belongsTo(models.User);
   }
 
   static config(sequelize) {

@@ -36,6 +36,14 @@ class Conversation extends Model {
       foreignKey: 'conversationId',
       as: 'messages',
     });
+    this.belongsTo(models.User, {
+      as: 'userOne',
+      foreignKey: 'user1',
+    });
+    this.belongsTo(models.User, {
+      as: 'userTwo',
+      foreignKey: 'user2',
+    });
   }
 
   static config(sequelize) {

@@ -160,6 +160,32 @@ class UserService {
     return availableUsers;
   }
 
+  async getAcceptedConnections(id) {
+    const idConnections = await models.Connection.findAll({
+      where: {
+        [Op.or]: [{ userId: id }, { connectionId: id }],
+        accepted: true,
+      },
+      include: [
+        {
+          model: models.User,
+          as: 'requester',
+          attributes: {
+            exclude: ['password', 'email', 'recoveryToken', 'createdAt', 'updatedAt'],
+          },
+        },
+        {
+          model: models.User,
+          as: 'requestedTo',
+          attributes: {
+            exclude: ['password', 'email', 'recoveryToken', 'createdAt', 'updatedAt'],
+          },
+        },
+      ],
+    });
+    return idConnections;
+  }
+
   async createConnection(data) {
     const { userId, connectionId } = data;
     if (userId == connectionId) throw boom.badRequest('user cannot conneect with itself');

@@ -1,6 +1,7 @@
 const { Model, DataTypes, Sequelize } = require('sequelize');
 const bcrypt = require('bcrypt');
 const { Connection } = require('./connection.model');
+const { Message } = require('./message.model');
 
 const USER_TABLE = 'users';
 // User Schema in the Database with all of its constrains
@@ -70,6 +71,10 @@ class User extends Model {
       otherKey: 'userId',
       foreignKey: 'connectionId',
       through: Connection,
+    });
+    this.hasMany(models.Message, {
+      as: 'outgoing',
+      foreignKey: 'receiverId',
     });
   }
 

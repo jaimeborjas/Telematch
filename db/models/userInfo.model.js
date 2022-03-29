@@ -64,7 +64,7 @@ const UserInfoSchema = {
     onDelete: 'CASCADE',
   },
 };
-// Customer class model
+
 class UserInfo extends Model {
   static associate(models) {
     // models

@@ -22,6 +22,7 @@ router.get('/', passport.authenticate('jwt', { session: false }), async (req, re
 router.post('/send', validatorHandler(sendMessageSchema, 'body'), passport.authenticate('jwt', { session: false }), async (req, res, next) => {
   try {
     const body = req.body;
+    console.log(body);
     const newUser = await service.sendMessage(req.user.sub, body);
     res.json(newUser);
   } catch (error) {

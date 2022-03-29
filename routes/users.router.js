@@ -37,7 +37,14 @@ router.get('/available', passport.authenticate('jwt', { session: false }), async
     next(error);
   }
 });
-
+router.get('/connections', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
+  try {
+    const connection = await service.getAcceptedConnections(req.user.sub);
+    res.json(connection);
+  } catch (error) {
+    next(error);
+  }
+});
 router.post('/connect', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
   try {
     const data = {

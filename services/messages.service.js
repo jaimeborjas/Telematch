@@ -14,17 +14,71 @@ class MessagesService {
     }
     return MessagesService._messageServiceInstance;
   }
+  async getMessages(id) {
+    let user = await models.Message.findAll({
+      include: [
+        {
+          model: models.User,
+          as: 'receiver',
+        },
+        {
+          model: models.User,
+          as: 'sender',
+        },
+      ],
+    });
+    return user;
+  }
+
   async getAllMessages(id) {
     let conversation = await models.Conversation.findAll({
       where: {
         [Op.or]: [{ user1: id }, { user2: id }],
       },
-      include: {
-        model: models.Message,
-        as: 'messages',
-      },
+      attributes: { exclude: ['user1', 'user2'] },
+      include: [
+        {
+          model: models.User,
+          as: 'userOne',
+          attributes: {
+            exclude: ['password', 'email', 'recoveryToken', 'createdAt', 'updatedAt'],
+          },
+        },
+        {
+          model: models.User,
+          as: 'userTwo',
+        },
+        {
+          model: models.Message,
+          as: 'messages',
+        },
+      ],
     });
     return conversation;
+  }
+  async getConversation(userId, connectionId) {
+    let conversation = await models.Conversation.findAll({
+      where: {
+        [Op.or]: [{ [Op.and]: [{ user1: userId }, { user2: connectionId }] }, { [Op.and]: [{ user1: connectionId }, { user2: userId }] }],
+      },
+      include: [
+        {
+          model: models.User,
+          as: 'userOne',
+          attributes: {
+            exclude: ['password', 'email', 'recoveryToken', 'createdAt', 'updatedAt'],
+          },
+        },
+        {
+          model: models.User,
+          as: 'userTwo',
+        },
+        {
+          model: models.Message,
+          as: 'messages',
+        },
+      ],
+    });
   }
   async sendMessage(id, data) {
     let conversation = await models.Conversation.findOne({
@@ -39,8 +93,8 @@ class MessagesService {
       });
     }
     const newMessage = await models.Message.create({
-      sender: id,
-      receiver: data.receiver,
+      senderId: id,
+      receiverId: data.receiver,
       message: data.message,
       conversationId: conversation.id,
     });

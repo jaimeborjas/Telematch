@@ -52,7 +52,16 @@ const ConnectionsSchema = {
 // Customer class model it is used to initialize the mdoel in the sequalize instance
 class Connection extends Model {
   // Describes relations with other tables
-  static associate(models) {}
+  static associate(models) {
+    this.belongsTo(models.User, {
+      as: 'requester',
+      foreignKey: 'userId',
+    });
+    this.belongsTo(models.User, {
+      as: 'requestedTo',
+      foreignKey: 'connectionId',
+    });
+  }
 
   static config(sequelize) {
     return {

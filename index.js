@@ -19,6 +19,15 @@ const io = require('socket.io')(httpServer, options);
 io.on('connection', (socket) => {
   console.log('connected');
   socket.emit('message', 'connection');
+  socket.on('notification', (notification) => {
+    console.log(notification);
+  });
+});
+io.on('disconnect', (socket) => {
+  console.log('disoncee');
+});
+io.on('notification', (socket) => {
+  console.log('disoncee');
 });
 //express middlewares
 app.use(express.urlencoded({ extended: true }));
