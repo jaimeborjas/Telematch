@@ -19,6 +19,17 @@ router.get('/', passport.authenticate('jwt', { session: false }), async (req, re
     next(error);
   }
 });
+
+router.get('/:id', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
+  try {
+    const connectionId = req.params.id;
+    const users = await service.getConversation(req.user.sub, connectionId);
+    res.json(users);
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.post('/send', validatorHandler(sendMessageSchema, 'body'), passport.authenticate('jwt', { session: false }), async (req, res, next) => {
   try {
     const body = req.body;

@@ -79,6 +79,7 @@ class MessagesService {
         },
       ],
     });
+    return conversation;
   }
   async sendMessage(id, data) {
     let conversation = await models.Conversation.findOne({
