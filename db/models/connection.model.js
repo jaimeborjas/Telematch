@@ -61,6 +61,10 @@ class Connection extends Model {
       as: 'requestedTo',
       foreignKey: 'connectionId',
     });
+    this.hasMany(models.TimeSheet, {
+      as: 'timesheet',
+      foreignKey: 'connectionId',
+    })
   }
 
   static config(sequelize) {

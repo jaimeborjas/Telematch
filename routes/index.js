@@ -4,6 +4,7 @@ const usersRouter = require('./users.router');
 const userInfoRouter = require('./userInfo.router');
 const authRouter = require('./auth.router');
 const messagesRouter = require('./messages.router');
+const timesheetRouter = require('./timesheet.router');
 
 // Router that manages the '/api' endpoint
 function routerApi(app) {
@@ -13,6 +14,7 @@ function routerApi(app) {
   router.use('/userinfo', userInfoRouter);
   router.use('/auth', authRouter);
   router.use('/messages', messagesRouter);
+  router.use('/timesheet', timesheetRouter);
 }
 
 module.exports = routerApi;

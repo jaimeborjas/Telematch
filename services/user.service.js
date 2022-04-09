@@ -129,16 +129,6 @@ class UserService {
         role: toSearch,
       },
       include: ['userInfo'],
-      // {
-      //   model: models.User,
-      //   as: 'connections',
-      //   where: {
-      //     [Op.not]: [{ userId: id }, { connectionId: id }],
-      //   },
-      //   attributes: {
-      //     exclude: ['password', 'Connection'],
-      //   },
-      // },
       attributes: {
         exclude: ['password', 'recoveryToken'],
       },
@@ -184,6 +174,49 @@ class UserService {
       ],
     });
     return idConnections;
+  }
+
+  async getAllTimesheets(id){
+    const idConnections = await models.Connection.findAll({
+      where: {
+        [Op.or]: [{ userId: id }, { connectionId: id }],
+        accepted: true,
+      },
+      include: [
+        {
+          model: models.User,
+          as: 'requester',
+          attributes: {
+            exclude: ['password', 'email', 'recoveryToken', 'createdAt', 'updatedAt'],
+          },
+        },
+        {
+          model: models.User,
+          as: 'requestedTo',
+          attributes: {
+            exclude: ['password', 'email', 'recoveryToken', 'createdAt', 'updatedAt'],
+          },
+        },
+        {
+          model: models.TimeSheet,
+          as: 'timesheet',
+          required: true
+        },
+      ],
+    });
+    return idConnections
+  }
+
+  async acceptTimesheet(timesheetId) {
+    let timesheet = await models.TimeSheet.findByPk(timesheetId);
+    timsheet = await timesheet.update({validated: true})
+    return timesheet
+  }
+
+
+  async createTimeSheet(data){
+    const timesheet = await models.TimeSheet.create(data)
+    return timesheet
   }
 
   async createConnection(data) {

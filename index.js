@@ -4,6 +4,7 @@ const port = process.env.PORT || 3002;
 const httpServer = require('http').createServer(app);
 const routerApi = require('./routes');
 const cors = require('cors');
+const passport = require('passport');
 
 const { errorHandler, logErrors, boomErrorHandler, sequelizeErrorHandler } = require('./middlewares/error.handler');
 const { application_name } = require('pg/lib/defaults');
@@ -14,18 +15,40 @@ const options = {
   },
 };
 
+const wrap = (middleware) => (socket, next) => middleware(socket.request, {}, next);
 const io = require('socket.io')(httpServer, options);
-
+io.use(wrap(passport.initialize()));
+io.use(wrap(passport.authenticate('jwt', { session: false })));
 io.on('connection', (socket) => {
-  console.log('connected');
-  socket.emit('message', 'connection');
-  socket.on('notification', (notification) => {
-    console.log(notification);
+  console.log('Connected to socket.io');
+  socket.on('setup', (userData) => {
+    socket.join(userData._id);
+    socket.emit('connected');
+  });
+
+  socket.on('join chat', (room) => {
+    if (room) {
+      socket.join(room);
+      console.log('User ' + socket.id + ' Joined Room: ' + room);
+    }
+  });
+
+  socket.on('new message', (newMessageRecieved) => {
+    var chat = newMessageRecieved.id;
+    console.log('mesasge in chat id ' + chat);
+    if (!chat) return console.log('chat not defined');
+    socket.in(chat).emit('message received', newMessageRecieved);
+  });
+
+  socket.off('setup', () => {
+    console.log('USER DISCONNECTED');
+  });
+
+  socket.on('disconnect', (socket) => {
+    console.log('disconnected');
   });
 });
-io.on('disconnect', (socket) => {
-  console.log('disoncee');
-});
+
 io.on('notification', (socket) => {
   console.log('disoncee');
 });
