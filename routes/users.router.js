@@ -60,8 +60,16 @@ router.post('/connect', passport.authenticate('jwt', { session: false }), async 
 
 router.post('/connect/accept', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
   try {
-    console.log(req.body);
     const accepted = await service.acceptConnection(req.body.connectionId, req.body);
+    res.json(accepted);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.post('/connect/delete', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
+  try {
+    const accepted = await service.deleteConnection(req.body.connectionId);
     res.json(accepted);
   } catch (error) {
     next(error);

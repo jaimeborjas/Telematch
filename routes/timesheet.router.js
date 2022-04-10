@@ -13,7 +13,17 @@ router.use(checkApiKey);
 router.get('/', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
   try {
     const users = await service.getAllTimesheets(req.user.sub);
-    
+
+    res.json(users);
+  } catch (error) {
+    next(error);
+  }
+});
+router.get('/:id', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
+  try {
+    const connectionId = req.params.id;
+
+    const users = await service.getTimeSheetConnection(connectionId);
     res.json(users);
   } catch (error) {
     next(error);
@@ -25,8 +35,8 @@ router.post('/:id', passport.authenticate('jwt', { session: false }), async (req
     const connectionId = req.params.id;
     const data = {
       ...req.body,
-      connectionId: connectionId
-    }
+      connectionId: connectionId,
+    };
     const users = await service.createTimeSheet(data);
     res.json(users);
   } catch (error) {
@@ -45,7 +55,7 @@ router.post('/add/:id', passport.authenticate('jwt', { session: false }), async 
   } catch (error) {
     next(error);
   }
-}); 
+});
 router.delete('/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -55,6 +65,5 @@ router.delete('/:id', async (req, res, next) => {
     next(error);
   }
 });
-
 
 module.exports = router;

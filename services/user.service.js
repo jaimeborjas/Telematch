@@ -176,7 +176,7 @@ class UserService {
     return idConnections;
   }
 
-  async getAllTimesheets(id){
+  async getAllTimesheets(id) {
     const idConnections = await models.Connection.findAll({
       where: {
         [Op.or]: [{ userId: id }, { connectionId: id }],
@@ -200,23 +200,53 @@ class UserService {
         {
           model: models.TimeSheet,
           as: 'timesheet',
-          required: true
+          required: true,
         },
       ],
     });
-    return idConnections
+    return idConnections;
+  }
+
+  async getTimeSheetConnection(connectionId) {
+    const idConnections = await models.Connection.findAll({
+      where: {
+        id: connectionId,
+        accepted: true,
+      },
+      include: [
+        {
+          model: models.User,
+          as: 'requester',
+          attributes: {
+            exclude: ['password', 'email', 'recoveryToken', 'createdAt', 'updatedAt'],
+          },
+        },
+        {
+          model: models.User,
+          as: 'requestedTo',
+          attributes: {
+            exclude: ['password', 'email', 'recoveryToken', 'createdAt', 'updatedAt'],
+          },
+        },
+        {
+          model: models.TimeSheet,
+          as: 'timesheet',
+          required: true,
+        },
+      ],
+    });
+    return idConnections;
   }
 
   async acceptTimesheet(timesheetId) {
     let timesheet = await models.TimeSheet.findByPk(timesheetId);
-    timsheet = await timesheet.update({validated: true})
-    return timesheet
+    timsheet = await timesheet.update({ validated: true });
+    return timesheet;
   }
 
-
-  async createTimeSheet(data){
-    const timesheet = await models.TimeSheet.create(data)
-    return timesheet
+  async createTimeSheet(data) {
+    const timesheet = await models.TimeSheet.create(data);
+    return timesheet;
   }
 
   async createConnection(data) {
@@ -239,6 +269,12 @@ class UserService {
     console.log(connection);
     const update = connection.update({ accepted: data.accepted });
     return update;
+  }
+  async deleteConnection(id) {
+    const connection = await models.Connection.findByPk(id);
+    console.log(connection);
+    const update = connection.destroy();
+    return id;
   }
 }
 
