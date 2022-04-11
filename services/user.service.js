@@ -271,10 +271,14 @@ class UserService {
     return update;
   }
   async deleteConnection(id) {
-    const connection = await models.Connection.findByPk(id);
-    console.log(connection);
-    const update = connection.destroy();
-    return id;
+    try {
+      const connection = await models.Connection.findByPk(id);
+      console.log(connection);
+      const update = connection.destroy();
+      return id;
+    } catch (error) {
+      throw new Error('there was a problem');
+    }
   }
 }
 

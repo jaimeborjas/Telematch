@@ -28,6 +28,7 @@ module.exports = {
       connectionId: {
         allowNull: false,
         type: DataTypes.INTEGER,
+        onDelete: 'CASCADE',
         references: {
           model: CONNECTION_TABLE,
           key: 'id',

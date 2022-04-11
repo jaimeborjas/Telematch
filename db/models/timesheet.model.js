@@ -1,7 +1,7 @@
 const { Model, DataTypes, Sequelize } = require('sequelize');
 
 const TIMESHEET_TABLE = 'timesheets';
-const {CONNECTION_TABLE} = require('./connection.model')
+const { CONNECTION_TABLE } = require('./connection.model');
 
 // User Schema in the Database with all of its constrains
 const TimeSheetSchema = {
@@ -31,6 +31,8 @@ const TimeSheetSchema = {
       model: CONNECTION_TABLE,
       key: 'id',
     },
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE',
   },
 };
 // Customer class model it is used to initialize the mdoel in the sequalize instance
@@ -40,6 +42,7 @@ class TimeSheet extends Model {
     this.belongsTo(models.Connection, {
       as: 'timesheet',
       foreignKey: 'id',
+      onDelete: 'CASCADE',
     });
   }
 

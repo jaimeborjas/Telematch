@@ -21,7 +21,7 @@ const ConnectionsSchema = {
       key: 'id',
     },
     onUpdate: 'CASCADE',
-    onDelete: 'CASCADE',
+    onDelete: 'SET NULL',
   },
   connectionId: {
     field: 'connection_id',
@@ -32,7 +32,7 @@ const ConnectionsSchema = {
       key: 'id',
     },
     onUpdate: 'CASCADE',
-    onDelete: 'CASCADE',
+    onDelete: 'SET NULL',
   },
   accepted: {
     type: DataTypes.BOOLEAN,
@@ -64,6 +64,7 @@ class Connection extends Model {
     this.hasMany(models.TimeSheet, {
       as: 'timesheet',
       foreignKey: 'connectionId',
+      onDelete: 'CASCADE',
     });
   }
 
