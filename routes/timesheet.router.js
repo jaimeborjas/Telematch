@@ -44,13 +44,10 @@ router.post('/:id', passport.authenticate('jwt', { session: false }), async (req
   }
 });
 
-router.post('/add/:id', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
+router.patch('/:id', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
   try {
-    const data = {
-      userId: req.user.sub,
-      connectionId: req.body.connectionId,
-    };
-    const connection = await service.createConnection(data);
+    const timesheetId = req.params.id;
+    const connection = await service.acceptTimesheet(timesheetId);
     res.json(connection);
   } catch (error) {
     next(error);
@@ -59,7 +56,7 @@ router.post('/add/:id', passport.authenticate('jwt', { session: false }), async 
 router.delete('/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
-    await service.delete(id);
+    await service.deleteTimesheetEntry(id);
     res.status(201).json({ id });
   } catch (error) {
     next(error);

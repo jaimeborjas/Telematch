@@ -22,7 +22,8 @@ io.use(wrap(passport.authenticate('jwt', { session: false })));
 io.on('connection', (socket) => {
   console.log('Connected to socket.io');
   socket.on('setup', (userData) => {
-    socket.join(userData._id);
+    console.log('msg-' + userData.user.id);
+    socket.join('msg-' + userData.user.id);
     socket.emit('connected');
   });
 
@@ -34,10 +35,11 @@ io.on('connection', (socket) => {
   });
 
   socket.on('new message', (newMessageRecieved) => {
+    let receiverRoom = 'msg-' + newMessageRecieved.message.receiverId;
     var chat = newMessageRecieved.id;
-    console.log('mesasge in chat id ' + chat);
-    if (!chat) return console.log('chat not defined');
-    socket.in(chat).emit('message received', newMessageRecieved);
+    console.log('room ' + receiverRoom + ' received a message');
+    if (!receiverRoom) return console.log('chat not defined');
+    socket.in(receiverRoom).emit('message received', newMessageRecieved);
   });
 
   socket.off('setup', () => {

@@ -243,6 +243,11 @@ class UserService {
     timsheet = await timesheet.update({ validated: true });
     return timesheet;
   }
+  async deleteTimesheetEntry(timesheetId) {
+    let timesheet = await models.TimeSheet.findByPk(timesheetId);
+    timsheet = await timesheet.destroy();
+    return timesheetId;
+  }
 
   async createTimeSheet(data) {
     const timesheet = await models.TimeSheet.create(data);
