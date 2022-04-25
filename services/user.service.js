@@ -240,12 +240,12 @@ class UserService {
 
   async acceptTimesheet(timesheetId) {
     let timesheet = await models.TimeSheet.findByPk(timesheetId);
-    timsheet = await timesheet.update({ validated: true });
+    timesheet = await timesheet.update({ validated: true });
     return timesheet;
   }
   async deleteTimesheetEntry(timesheetId) {
     let timesheet = await models.TimeSheet.findByPk(timesheetId);
-    timsheet = await timesheet.destroy();
+    timesheet = await timesheet.destroy();
     return timesheetId;
   }
 
